@@ -13,8 +13,9 @@ if(isset($_POST['save']))
     echo '<script>alert("Total number of eggs cannot be less than number of eggs cracked")</script>';
     echo "<script>window.location.href ='egg.php'</script>";
   }else{
-    $sql="insert into tblegg(totalNumber,numberCracked)values(:number,:cracked)";
+    $sql="insert into tblegg(eggCategory, totalNumber,numberCracked)values(:eggCategory, :number,:cracked)";
     $query=$dbh->prepare($sql);
+    $query->bindParam(':eggCategory',$eggCategory,PDO::PARAM_STR);
     $query->bindParam(':number',$eggNumber,PDO::PARAM_STR);
     $query->bindParam(':cracked',$numberCracked,PDO::PARAM_STR);
     $query->execute();
