@@ -204,19 +204,17 @@ INSERT INTO `tblcompany` (`id`, `regno`, `companyname`, `companyemail`, `country
 --
 
 CREATE TABLE `tblegg` (
-  `id` int(11) NOT NULL,
-  `TotalNumber` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `NumberCracked` varchar(500) CHARACTER SET swe7 COLLATE swe7_swedish_ci NOT NULL,
-  `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `EggCategory` enum('small','medium','large') NOT NULL,
+  `TotalNumber` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `NumberCracked` varchar(500) CHARACTER SET swe7 NOT NULL,
+  `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4
 
 --
 -- Dumping data for table `tblegg`
 --
 
-INSERT INTO `tblegg` (`id`, `TotalNumber`, `NumberCracked`, `PostingDate`) VALUES
-(3, '23', '3', '2023-10-27 17:23:18'),
-(4, '67', '4', '2023-10-23 07:39:13');
 
 -- --------------------------------------------------------
 
@@ -471,13 +469,6 @@ ALTER TABLE `tblcategory`
 --
 ALTER TABLE `tblcompany`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `tblegg`
---
-ALTER TABLE `tblegg`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `tblfeed`
 --
