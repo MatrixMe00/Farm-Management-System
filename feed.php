@@ -8,22 +8,26 @@ if(isset($_POST['save']))
   $qtyPurchase=$_POST['feedNum'];
   $qtyConsume=$_POST['consume'];
   $rate=$_POST['price'];
-  $sql="insert into tblfeed(FeedName,QtyPurchase,qtyConsume,price)values(:feed,:feedNum,:consume,:price)";
-  $query=$dbh->prepare($sql);
-  $query->bindParam(':feed',$feedName,PDO::PARAM_STR);
-  $query->bindParam(':feedNum',$qtyPurchase,PDO::PARAM_STR);
-  $query->bindParam(':consume',$qtyConsume,PDO::PARAM_STR);
-  $query->bindParam(':price',$rate,PDO::PARAM_STR);
-  $query->execute();
-  $LastInsertId=$dbh->lastInsertId();
-  if ($LastInsertId>0) 
-  {
-    echo '<script>alert("Registered successfully")</script>';
-    echo "<script>window.location.href ='feed.php'</script>";
-  }
-  else
-  {
-    echo '<script>alert("Something Went Wrong. Please try again")</script>';
+
+  if($qtyPurchase < $qtyConsume){
+    echo '<script>alert("Quantity consumed is beyond quantity purchased")</script>';
+  }else{
+    $sql="insert into tblfeed(FeedName,QtyPurchase,qtyConsume,price)values(:feed,:feedNum,:consume,:price)";
+    $query=$dbh->prepare($sql);
+    $query->bindParam(':feed',$feedName,PDO::PARAM_STR);
+    $query->bindParam(':feedNum',$qtyPurchase,PDO::PARAM_STR);
+    $query->bindParam(':consume',$qtyConsume,PDO::PARAM_STR);
+    $query->bindParam(':price',$rate,PDO::PARAM_STR);
+    $query->execute();
+    $LastInsertId=$dbh->lastInsertId();
+    if ($LastInsertId>0) 
+    {
+      echo '<script>alert("Registered successfully")</script>';
+    }
+    else
+    {
+      echo '<script>alert("Something Went Wrong. Please try again")</script>';
+    }
   }
 }
 if(isset($_GET['del'])){    
@@ -57,8 +61,14 @@ if(isset($_GET['del'])){
                 <form class="forms-sample" method="post" enctype="multipart/form-data" class="form-horizontal">
                   <div class="row ">
                   <div class="form-group col-md-6">
-                      <label for="exampleInputName1">Feed Name </label>
-                      <input type="text" name="feed" class="form-control" value="" id="product" placeholder="Enter feed name" required>
+                      <label for="exampleInputName1">Feed Category </label>
+                      <select name="feed" id="product" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="broiler">Broiler Feed</option>
+                        <option value="kuroiler">Kuroiler Feed</option>
+                        <option value="layer">Layer Feed</option>
+                        <option value="chick">Chick Feed</option>
+                      </select>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="exampleInputName1">Feed quatity purchased</label>
@@ -68,13 +78,12 @@ if(isset($_GET['del'])){
                   <div class="row ">
                     <div class="form-group col-md-6">
                       <label for="exampleInputName1">Feed quantity consumed</label>
-                      <input type="number" name="consume" value="" placeholder="Enter quantity" class="form-control" id="price">
+                      <input type="number" name="consume" value="" placeholder="Enter quantity" class="form-control" id="price" required>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="exampleInputName1">Rate</label>
                       <input type="number" name="price" value="" placeholder="Enter Price" class="form-control" id="price"required>
                     </div>
-            
                   </div>
                   <button type="submit" style="float: left;" name="save" class="btn btn-primary  mr-2 mb-4">Save</button>
                 </form>
@@ -134,7 +143,8 @@ if(isset($_GET['del'])){
                   <thead>
                     <tr>
                       <th class="text-center">No</th>
-                      <th class="text-center">Feed Name</th>
+                      <th class="text-center">Feed Category</th>
+                      <th class="text-center">Bird Category</th>
                       <th class="text-center"> Price</th>
                       <th class="text-center"> Qty Purchase</th>
                       <th class="text-center"> Qty Consumed</th>
@@ -155,15 +165,16 @@ if(isset($_GET['del'])){
                       { 
                         ?>
                         <tr>
-                          <td class="text-center"><?php echo htmlentities($cnt);?></td>
-                          <td class="text-center"><?php  echo htmlentities($row->FeedName);?></td>
-                          <td class="text-center"><?php  echo htmlentities($row->price);?></td>
-                          <td class="text-center"><?php  echo htmlentities($row->QtyPurchase);?></td>
-                          <td class="text-center"><?php  echo htmlentities($row->qtyConsume);?></td>
-                          <td class="text-center"><?php  echo htmlentities(date("d-m-Y", strtotime($row->PostingDate)));?></td>
-                          <td class=" text-center"><a href="#"  class=" edit_data4" id="<?php echo  ($row->id); ?>" title="click to edit"><i class="mdi mdi-pencil-box-outline text-success" aria-hidden="true"></i></a>
-                            <a href="#"  class=" edit_data5" id="<?php echo  ($row->id); ?>" title="click to view">&nbsp;<i class="mdi mdi-eye" aria-hidden="true"></i></a>
-                            <a href="feed.php?del=<?php echo ($row->id);?>" data-toggle="tooltip" data-original-title="Delete" onclick="return confirm('Do you really want to delete?');"> <i class="mdi mdi-delete text-danger"></i> </a>
+                          <td class="text-center"><?= $cnt ?></td>
+                          <td class="text-center"><?= ucwords($row->FeedName)." Feed" ?></td>
+                          <td class="text-center"><?= ucfirst($row->FeedName) ?></td>
+                          <td class="text-center"><?= $row->price ?></td>
+                          <td class="text-center"><?= $row->QtyPurchase ?></td>
+                          <td class="text-center"><?= $row->qtyConsume ?></td>
+                          <td class="text-center"><?= htmlentities(date("d-m-Y", strtotime($row->PostingDate)));?></td>
+                          <td class=" text-center"><a href="#"  class=" edit_data4" id="<?=  ($row->id); ?>" title="click to edit"><i class="mdi mdi-pencil-box-outline text-success" aria-hidden="true"></i></a>
+                            <a href="#"  class=" edit_data5" id="<?=  ($row->id); ?>" title="click to view">&nbsp;<i class="mdi mdi-eye" aria-hidden="true"></i></a>
+                            <a href="feed.php?del=<?= ($row->id);?>" data-toggle="tooltip" data-original-title="Delete" onclick="return confirm('Do you really want to delete?');"> <i class="mdi mdi-delete text-danger"></i> </a>
                           </td>
                         </tr>
                         <?php 
