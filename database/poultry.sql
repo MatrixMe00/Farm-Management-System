@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 28, 2023 at 12:28 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Nov 16, 2023 at 07:40 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL,
-  `permission` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `permission` varchar(255) CHARACTER SET latin1 NOT NULL,
   `createuser` varchar(255) DEFAULT NULL,
   `deleteuser` varchar(255) DEFAULT NULL,
   `createbid` varchar(255) DEFAULT NULL,
   `updatebid` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `permissions`
@@ -57,7 +57,7 @@ CREATE TABLE `store_out` (
   `item` varchar(500) NOT NULL,
   `quantity` varchar(500) NOT NULL,
   `itemsoutvalue` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `store_out`
@@ -83,7 +83,7 @@ CREATE TABLE `store_stock` (
   `quantity_remaining` varchar(500) NOT NULL,
   `itemvalue` int(15) NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `store_stock`
@@ -93,7 +93,8 @@ INSERT INTO `store_stock` (`id`, `date`, `item`, `quantity`, `rate`, `total`, `q
 (12, '2023-05-23', 'brooms', '', '10000', '380000', '10', 100000, '1'),
 (16, '2023-07-19', 'liquid soap jellycans', '', '20000', '200000', '7', 140000, '1'),
 (19, '2023-10-11', 'Poultry feeds', '', '88', '102704', '108', 100704, '1'),
-(20, '2023-07-02', 'Poultry medicine', '', '1000', '30000', '30', 30000, '1');
+(20, '2023-07-02', 'Poultry medicine', '', '1000', '30000', '30', 30000, '1'),
+(21, '2023-11-14', 'brooms', '', '168', '7560', '45', 7560, '1');
 
 -- --------------------------------------------------------
 
@@ -111,10 +112,10 @@ CREATE TABLE `tbladmin` (
   `MobileNumber` bigint(10) DEFAULT NULL,
   `Email` varchar(200) DEFAULT NULL,
   `Status` int(11) NOT NULL DEFAULT 1,
-  `Photo` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'avatar15.jpg',
+  `Photo` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT 'avatar15.jpg',
   `Password` varchar(120) DEFAULT NULL,
   `AdminRegdate` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbladmin`
@@ -132,11 +133,11 @@ INSERT INTO `tbladmin` (`ID`, `Staffid`, `AdminName`, `UserName`, `FirstName`, `
 
 CREATE TABLE `tblbirds` (
   `id` int(11) NOT NULL,
-  `BirdName` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `NUmber` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `BirdImage` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `BirdName` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `NUmber` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `BirdImage` varchar(255) CHARACTER SET latin1 NOT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblbirds`
@@ -157,7 +158,7 @@ CREATE TABLE `tblcategory` (
   `CategoryName` varchar(200) DEFAULT NULL,
   `CategoryCode` varchar(50) DEFAULT NULL,
   `PostingDate` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblcategory`
@@ -178,17 +179,17 @@ INSERT INTO `tblcategory` (`id`, `CategoryName`, `CategoryCode`, `PostingDate`) 
 
 CREATE TABLE `tblcompany` (
   `id` int(11) NOT NULL,
-  `regno` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `companyname` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `companyemail` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `country` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `regno` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `companyname` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `companyemail` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `country` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `companyphone` int(10) NOT NULL,
-  `companyaddress` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `companylogo` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'avatar15.jpg',
-  `status` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '0',
-  `developer` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `companyaddress` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `companylogo` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT 'avatar15.jpg',
+  `status` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '0',
+  `developer` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `creationdate` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblcompany`
@@ -204,17 +205,22 @@ INSERT INTO `tblcompany` (`id`, `regno`, `companyname`, `companyemail`, `country
 --
 
 CREATE TABLE `tblegg` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `EggCategory` enum('small','medium','large') NOT NULL,
   `TotalNumber` varchar(200) CHARACTER SET latin1 NOT NULL,
   `NumberCracked` varchar(500) CHARACTER SET swe7 NOT NULL,
-  `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4
+  `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblegg`
 --
 
+INSERT INTO `tblegg` (`id`, `EggCategory`, `TotalNumber`, `NumberCracked`, `PostingDate`) VALUES
+(1, 'small', '30', '26', '2023-11-16 13:38:51'),
+(2, 'small', '23', '15', '2023-10-16 13:48:55'),
+(3, 'large', '36', '18', '2023-11-16 13:49:56'),
+(4, 'medium', '35', '7', '2023-11-16 13:58:56');
 
 -- --------------------------------------------------------
 
@@ -224,20 +230,23 @@ CREATE TABLE `tblegg` (
 
 CREATE TABLE `tblfeed` (
   `id` int(11) NOT NULL,
-  `FeedName` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `FeedName` varchar(200) CHARACTER SET latin1 NOT NULL,
   `QtyPurchase` bigint(100) NOT NULL,
-  `qtyConsume` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `qtyConsume` varchar(500) CHARACTER SET latin1 NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblfeed`
 --
 
 INSERT INTO `tblfeed` (`id`, `FeedName`, `QtyPurchase`, `qtyConsume`, `price`, `PostingDate`) VALUES
-(1, 'akatsi', 9, '7', 7, '2023-10-23 00:08:49'),
-(4, 'Sccot breed', 23, '12', 5677, '2023-10-23 07:38:38');
+(1, 'broiler', 400, '60', '30', '2023-11-16 11:38:10'),
+(2, 'kuroiler', 476, '79', '38', '2023-11-16 11:38:48'),
+(3, 'broiler', 80, '78', '35', '2023-11-16 11:42:38'),
+(4, 'layer', 380, '80', '45', '2023-11-16 11:43:29'),
+(5, 'chick', 280, '10', '37', '2023-11-16 11:43:47');
 
 -- --------------------------------------------------------
 
@@ -247,10 +256,10 @@ INSERT INTO `tblfeed` (`id`, `FeedName`, `QtyPurchase`, `qtyConsume`, `price`, `
 
 CREATE TABLE `tblitems` (
   `id` int(11) NOT NULL,
-  `item` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `item` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `Creationdate` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblitems`
@@ -272,10 +281,10 @@ INSERT INTO `tblitems` (`id`, `item`, `description`, `Creationdate`) VALUES
 
 CREATE TABLE `tblmortality` (
   `id` int(11) NOT NULL,
-  `CategoryName` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `CategoryName` varchar(200) CHARACTER SET latin1 NOT NULL,
   `NumberOfDeath` bigint(20) NOT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblmortality`
@@ -285,7 +294,8 @@ INSERT INTO `tblmortality` (`id`, `CategoryName`, `NumberOfDeath`, `PostingDate`
 (1, 'Chick', 9, '2023-10-22 12:49:25'),
 (4, 'Birds', 8, '2023-10-22 13:15:54'),
 (6, 'Chick', 8, '2023-10-27 17:15:10'),
-(7, 'Birds', 90, '2023-10-23 12:04:44');
+(7, 'Birds', 90, '2023-10-23 12:04:44'),
+(8, 'Birds', 12, '2023-11-01 22:29:28');
 
 -- --------------------------------------------------------
 
@@ -302,7 +312,7 @@ CREATE TABLE `tblorders` (
   `CustomerContactNo` bigint(12) DEFAULT NULL,
   `PaymentMode` varchar(100) DEFAULT NULL,
   `InvoiceGenDate` date DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblorders`
@@ -329,18 +339,19 @@ CREATE TABLE `tblproducts` (
   `ProductPrice` decimal(10,0) DEFAULT current_timestamp(),
   `PostingDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblproducts`
 --
 
 INSERT INTO `tblproducts` (`id`, `CategoryName`, `ProductName`, `ProductImage`, `ProductPrice`, `PostingDate`, `UpdationDate`) VALUES
-(10, 'Eggs', ' local eggs', 'po5.jpg', 5000, '2023-07-03 14:18:15', '2023-10-23 02:59:19'),
-(12, 'Birds', 'kuroiler', 'kuroiler.jpg', 8000, '2021-07-13 14:22:22', NULL),
-(13, 'Birds', 'layers', 'bi.jpg', 6000, '2021-07-10 14:23:14', NULL),
-(14, 'Birds', 'boilers', 'bi6.jpg', 9000, '2021-07-10 14:24:19', NULL),
-(15, 'Chick', 'young chick', 'chick.jpg', 1000, '2021-07-20 23:11:24', '2021-07-20 23:11:24');
+(10, 'Eggs', ' local eggs', 'po5.jpg', '5000', '2023-07-03 14:18:15', '2023-10-23 02:59:19'),
+(12, 'Birds', 'kuroiler', 'kuroiler.jpg', '8000', '2021-07-13 14:22:22', NULL),
+(13, 'Birds', 'layers', 'bi.jpg', '6000', '2021-07-10 14:23:14', NULL),
+(14, 'Birds', 'boilers', 'bi6.jpg', '9000', '2021-07-10 14:24:19', NULL),
+(15, 'Chick', 'young chick', 'chick.jpg', '1000', '2021-07-20 23:11:24', '2021-07-20 23:11:24'),
+(18, 'Eggs', 'Medium Eggs', 'download1.jpeg', '1205', '2023-11-14 21:20:34', NULL);
 
 --
 -- Indexes for dumped tables
@@ -444,7 +455,7 @@ ALTER TABLE `store_out`
 -- AUTO_INCREMENT for table `store_stock`
 --
 ALTER TABLE `store_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tbladmin`
@@ -469,11 +480,18 @@ ALTER TABLE `tblcategory`
 --
 ALTER TABLE `tblcompany`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `tblegg`
+--
+ALTER TABLE `tblegg`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `tblfeed`
 --
 ALTER TABLE `tblfeed`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tblitems`
@@ -485,7 +503,7 @@ ALTER TABLE `tblitems`
 -- AUTO_INCREMENT for table `tblmortality`
 --
 ALTER TABLE `tblmortality`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tblorders`
@@ -497,7 +515,7 @@ ALTER TABLE `tblorders`
 -- AUTO_INCREMENT for table `tblproducts`
 --
 ALTER TABLE `tblproducts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
