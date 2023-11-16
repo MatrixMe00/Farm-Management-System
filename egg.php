@@ -5,23 +5,29 @@ ini_set('display_errors', 'On');
 check_login();
 if(isset($_POST['save']))
 {
-  
+  $eggCategory = $_POST["eggCategory"];
   $eggNumber=$_POST['number'];
   $numberCracked=$_POST['cracked'];
-  $sql="insert into tblegg(totalNumber,numberCracked)values(:number,:cracked)";
-  $query=$dbh->prepare($sql);
-  $query->bindParam(':number',$eggNumber,PDO::PARAM_STR);
-  $query->bindParam(':cracked',$numberCracked,PDO::PARAM_STR);
-  $query->execute();
-  $LastInsertId=$dbh->lastInsertId();
-  if ($LastInsertId>0) 
-  {
-    echo '<script>alert("Registered successfully")</script>';
+
+  if($eggNumber < $numberCracked){
+    echo '<script>alert("Total number of eggs cannot be less than number of eggs cracked")</script>';
     echo "<script>window.location.href ='egg.php'</script>";
-  }
-  else
-  {
-    echo '<script>alert("Something Went Wrong. Please try again")</script>';
+  }else{
+    $sql="insert into tblegg(totalNumber,numberCracked)values(:number,:cracked)";
+    $query=$dbh->prepare($sql);
+    $query->bindParam(':number',$eggNumber,PDO::PARAM_STR);
+    $query->bindParam(':cracked',$numberCracked,PDO::PARAM_STR);
+    $query->execute();
+    $LastInsertId=$dbh->lastInsertId();
+    if ($LastInsertId>0) 
+    {
+      echo '<script>alert("Registered successfully")</script>';
+      echo "<script>window.location.href ='egg.php'</script>";
+    }
+    else
+    {
+      echo '<script>alert("Something Went Wrong. Please try again")</script>';
+    }
   }
 }
 if(isset($_GET['del'])){    
@@ -54,7 +60,16 @@ if(isset($_GET['del'])){
               <div class="col-md-12 mt-4">
                 <form class="forms-sample" method="post" enctype="multipart/form-data" class="form-horizontal">
                   <div class="row ">
-                  <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
+                      <label for="exampleInputName1">Category of Egg </label>
+                      <select name="eggCategory" id="eggCategory" class="form-control" required>
+                        <option value="">Select a category</option>
+                        <option value="small">Small Size</option>
+                        <option value="medium">Medium Size</option>
+                        <option value="large">Large Size</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
                       <label for="exampleInputName1">Number of Egg </label>
                       <input type="number" name="number" class="form-control" value="" id="product" placeholder="Enter numberof egg" required>
                     </div>
@@ -122,6 +137,7 @@ if(isset($_GET['del'])){
                   <thead>
                     <tr>
                       <th class="text-center">No</th>
+                      <th class="text-center">Egg Category</th>
                       <th class="text-center">Total Number</th>
                       <th class="text-center">No. of Crackrd</th>
                       <th class="text-center">Posting Date</th>
@@ -130,7 +146,7 @@ if(isset($_GET['del'])){
                   </thead>
                   <tbody>
                     <?php
-                    $sql="SELECT tblegg.id,tblegg.TotalNumber,tblegg.NumberCracked,tblegg.PostingDate from tblegg ORDER BY id DESC";
+                    $sql="SELECT tblegg.id,tblegg.EggCategory, tblegg.TotalNumber,tblegg.NumberCracked,tblegg.PostingDate from tblegg ORDER BY id DESC";
                     $query = $dbh -> prepare($sql);
                     $query->execute();
                     $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -141,13 +157,14 @@ if(isset($_GET['del'])){
                       { 
                         ?>
                         <tr>
-                          <td class="text-center"><?php echo htmlentities($cnt);?></td>
-                          <td class="text-center"><?php  echo htmlentities($row->TotalNumber);?></td>
-                          <td class="text-center"><?php  echo htmlentities($row->NumberCracked);?></td>
-                          <td class="text-center"><?php  echo htmlentities(date("d-m-Y", strtotime($row->PostingDate)));?></td>
-                          <td class=" text-center"><a href="#"  class=" edit_data4" id="<?php echo  ($row->id); ?>" title="click to edit"><i class="mdi mdi-pencil-box-outline text-success" aria-hidden="true"></i></a>
-                            <a href="#"  class=" edit_data5" id="<?php echo  ($row->id); ?>" title="click to view">&nbsp;<i class="mdi mdi-eye" aria-hidden="true"></i></a>
-                            <a href="egg.php?del=<?php echo ($row->id);?>" data-toggle="tooltip" data-original-title="Delete" onclick="return confirm('Do you really want to delete?');"> <i class="mdi mdi-delete text-danger"></i> </a>
+                          <td class="text-center"><?= $cnt ?></td>
+                          <td class="text-center"><?= ucfirst($row->EggCategory). " Size"?></td>
+                          <td class="text-center"><?= $row->TotalNumber ?></td>
+                          <td class="text-center"><?= $row->NumberCracked ?></td>
+                          <td class="text-center"><?= date("d-m-Y", strtotime($row->PostingDate)) ?></td>
+                          <td class=" text-center"><a href="#"  class=" edit_data4" id="<?=  ($row->id); ?>" title="click to edit"><i class="mdi mdi-pencil-box-outline text-success" aria-hidden="true"></i></a>
+                            <a href="#"  class=" edit_data5" id="<?=  ($row->id); ?>" title="click to view">&nbsp;<i class="mdi mdi-eye" aria-hidden="true"></i></a>
+                            <a href="egg.php?del=<?= ($row->id);?>" data-toggle="tooltip" data-original-title="Delete" onclick="return confirm('Do you really want to delete?');"> <i class="mdi mdi-delete text-danger"></i> </a>
                           </td>
                         </tr>
                         <?php 
