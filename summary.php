@@ -59,7 +59,7 @@ function formatDump(...$data) {
                                     <?php require_once("summary/mortality.php"); ?>
                                 </div>
                             </div>
-                            <div class="card show-me" id="eggs">
+                            <div class="card" id="eggs">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Eggs Summary</h5>
                                 </div>
