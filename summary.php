@@ -59,7 +59,7 @@ function formatDump(...$data) {
                                     <?php require_once("summary/mortality.php"); ?>
                                 </div>
                             </div>
-                            <div class="card" id="eggs">
+                            <div class="card show-me" id="eggs">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Eggs Summary</h5>
                                 </div>
@@ -67,7 +67,7 @@ function formatDump(...$data) {
                                     <?php require_once("summary/eggs.php"); ?>
                                 </div>
                             </div>
-                            <div class="card show-me" id="feed">
+                            <div class="card" id="feed">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Feed Summary</h5>
                                 </div>
@@ -97,14 +97,32 @@ function formatDump(...$data) {
                 }
             }
 
-            function eggGraph(){
-                var egg_chart = $("canvas#egg_chart");
+            // good eggs graph
+            function goodEggGraph(){
+                var egg_chart = $("canvas#egg_chart_good");
                 var config = {
                     type: 'bar',
                     data: {
                         labels: <?= json_encode($egg_labels) ?>,
                         datasets: [
-                            <?= implode(",", $egg_dataset) ?>
+                            <?= implode(",", $egg_dataset_good) ?>
+                        ]
+                    },
+                    options: {}
+                }
+
+                var demoChart = new Chart(egg_chart,config);
+            }
+
+            // bad eggs graph
+            function badEggGraph(){
+                var egg_chart = $("canvas#egg_chart_bad");
+                var config = {
+                    type: 'bar',
+                    data: {
+                        labels: <?= json_encode($egg_labels) ?>,
+                        datasets: [
+                            <?= implode(",", $egg_dataset_bad) ?>
                         ]
                     },
                     options: {}
@@ -181,7 +199,8 @@ function formatDump(...$data) {
                 salesGraph();
                 lossGraph();
                 mortalityGraph();
-                eggGraph();
+                goodEggGraph();
+                badEggGraph();
                 feedsGraph();
             }
 
