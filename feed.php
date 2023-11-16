@@ -23,6 +23,7 @@ if(isset($_POST['save']))
     if ($LastInsertId>0) 
     {
       echo '<script>alert("Registered successfully")</script>';
+      echo "<script>window.location.href ='feed.php'</script>";
     }
     else
     {
