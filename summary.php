@@ -40,7 +40,7 @@ function formatDump(...$data) {
                         </div>
 
                         <div class="col-lg-12 grid-margin stretch-card" id="summary_displays">
-                            <div class="card" id="sales">
+                            <div class="card show-me" id="sales">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Cash Summary</h5>
                                 </div>
