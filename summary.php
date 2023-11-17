@@ -40,7 +40,7 @@ function formatDump(...$data) {
                         </div>
 
                         <div class="col-lg-12 grid-margin stretch-card" id="summary_displays">
-                            <div class="card show-me" id="sales">
+                            <div class="card" id="sales">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Cash Summary</h5>
                                 </div>
@@ -59,7 +59,7 @@ function formatDump(...$data) {
                                     <?php require_once("summary/mortality.php"); ?>
                                 </div>
                             </div>
-                            <div class="card" id="eggs">
+                            <div class="card show-me" id="eggs">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Eggs Summary</h5>
                                 </div>
