@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(1);
+// error_reporting(1);
 include('includes/dbconnection.php');
 function check_login()
 {
