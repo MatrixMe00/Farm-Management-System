@@ -103,7 +103,7 @@ function formatDump(...$data) {
                 var config = {
                     type: 'bar',
                     data: {
-                        labels: <?= json_encode($egg_labels) ?>,
+                        labels: <?= json_encode(array_values($egg_labels)) ?>,
                         datasets: [
                             <?= implode(",", $egg_dataset_good) ?>
                         ]
@@ -120,7 +120,7 @@ function formatDump(...$data) {
                 var config = {
                     type: 'bar',
                     data: {
-                        labels: <?= json_encode($egg_labels) ?>,
+                        labels: <?= json_encode(array_values($egg_labels)) ?>,
                         datasets: [
                             <?= implode(",", $egg_dataset_bad) ?>
                         ]
